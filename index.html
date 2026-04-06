@@ -35,11 +35,11 @@
     width: 100%;
     max-width: 480px;
     overflow: hidden;
-    box-shadow: 0 4px 24px rgba(74, 53, 128, 0.1);
+    box-shadow: 0 4px 24px rgba(74,53,128,0.1);
   }
   .hero {
     background: linear-gradient(160deg, #5c44a0 0%, #3d2b6e 100%);
-    padding: 2rem 1.5rem 1.75rem;
+    padding: 2rem 1.5rem 2.5rem;
     text-align: center;
     position: relative;
   }
@@ -63,42 +63,16 @@
     letter-spacing: 0.3px;
     border: 1px solid rgba(255,255,255,0.25);
   }
-  .hero h1 {
-    font-size: 21px;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 4px;
-    line-height: 1.4;
-  }
-  .hero .sub {
-    font-size: 13px;
-    color: rgba(255,255,255,0.65);
-  }
-  .body { padding: 1.75rem 1.5rem; }
-  .info-bar {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-bottom: 1.5rem;
-  }
-  .info-card {
-    background: var(--purple-soft);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px;
-    text-align: center;
-  }
+  .hero h1 { font-size: 21px; font-weight: 700; color: #fff; line-height: 1.4; margin-bottom: 1rem; }
+  .body { padding: 2.25rem 1.5rem 1.75rem; }
+  .info-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1.5rem; }
+  .info-card { background: var(--purple-soft); border: 1px solid var(--border); border-radius: 12px; padding: 12px; text-align: center; }
   .info-card .label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
   .info-card .value { font-size: 18px; font-weight: 700; color: var(--text-dark); }
   .info-card .value.highlight { color: var(--purple-mid); }
+  .info-card .value.small { font-size: 18px; font-weight: 700; color: var(--text-dark); }
   .field { margin-bottom: 1.25rem; }
-  .field label {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-mid);
-    margin-bottom: 6px;
-  }
+  .field label { display: block; font-size: 13px; font-weight: 600; color: var(--text-mid); margin-bottom: 6px; }
   .field input {
     width: 100%;
     border: 1.5px solid var(--border);
@@ -113,35 +87,19 @@
   }
   .field input:focus { border-color: var(--purple-mid); }
   .toggle-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .toggle-btn {
-    border: 1.5px solid var(--border);
-    border-radius: 12px;
-    padding: 12px;
-    cursor: pointer;
-    background: var(--white);
-    text-align: center;
-    transition: all 0.15s;
-  }
+  .toggle-btn { border: 1.5px solid var(--border); border-radius: 12px; padding: 12px; cursor: pointer; background: var(--white); text-align: center; transition: all 0.15s; }
   .toggle-btn:hover { background: var(--purple-soft); }
-  .toggle-btn.active {
-    border-color: var(--purple-mid);
-    background: var(--purple-pale);
-  }
+  .toggle-btn.active { border-color: var(--purple-mid); background: var(--purple-pale); }
   .toggle-btn .t-icon { font-size: 20px; margin-bottom: 4px; }
   .toggle-btn .t-label { font-size: 13px; color: var(--text-mid); }
   .toggle-btn.active .t-label { color: var(--purple-deep); font-weight: 600; }
   .toggle-btn .t-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
   .toggle-btn.active .t-sub { color: var(--purple-light); }
-  .delivery-box {
-    background: var(--purple-soft);
-    border-radius: 12px;
-    padding: 1rem;
-    margin-top: 8px;
-    border: 1px solid var(--border);
-  }
+  .delivery-box { background: var(--purple-soft); border-radius: 12px; padding: 1rem; margin-top: 8px; border: 1px solid var(--border); }
   .delivery-box.hidden { display: none; }
   .delivery-box .field:last-child { margin-bottom: 0; }
   .qty-row { display: flex; align-items: center; gap: 12px; }
+  .qty-controls { display: flex; align-items: center; gap: 8px; }
   .qty-btn {
     width: 38px; height: 38px;
     border: 1.5px solid var(--border);
@@ -156,62 +114,48 @@
     font-weight: 500;
   }
   .qty-btn:hover { background: var(--purple-pale); border-color: var(--purple-light); }
-  .qty-display { flex: 1; text-align: center; font-size: 20px; font-weight: 700; color: var(--text-dark); }
-  .qty-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .qty-input {
+    width: 64px; height: 38px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-dark);
+    font-family: inherit;
+    outline: none;
+    transition: border 0.15s;
+  }
+  .qty-input:focus { border-color: var(--purple-mid); }
+  .qty-price { margin-left: auto; font-size: 16px; font-weight: 700; color: var(--purple-mid); white-space: nowrap; }
   .divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
   .total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .total-label { font-size: 14px; color: var(--text-muted); }
   .total-value { font-size: 14px; color: var(--text-dark); }
+  .total-row.final { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
   .total-row.final .total-label { font-size: 16px; font-weight: 600; color: var(--text-dark); }
   .total-row.final .total-value { font-size: 22px; font-weight: 700; color: var(--purple-mid); }
   .submit-btn {
     width: 100%;
     background: linear-gradient(135deg, #6b52b5 0%, #4a3580 100%);
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    padding: 15px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 1.5rem;
-    transition: opacity 0.15s;
-    font-family: inherit;
-    letter-spacing: 0.3px;
+    color: #fff; border: none; border-radius: 12px;
+    padding: 15px; font-size: 16px; font-weight: 700;
+    cursor: pointer; margin-top: 1.5rem;
+    transition: opacity 0.15s; font-family: inherit; letter-spacing: 0.3px;
   }
   .submit-btn:hover { opacity: 0.9; }
   .submit-btn:active { transform: scale(0.99); }
   .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
   .notice { font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 12px; line-height: 1.7; }
-  .success { display: none; text-align: center; padding: 1rem 0; }
+  .success { display: none; text-align: center; padding: 2rem 1.5rem; }
   .success .check { font-size: 48px; margin-bottom: 1rem; }
   .success h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-dark); }
   .success .sub { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem; }
-  .account-box {
-    background: var(--brown-light);
-    border: 1px solid #e8d5c0;
-    border-radius: 14px;
-    padding: 14px 16px;
-    margin: 1rem 0;
-    text-align: left;
-  }
+  .account-box { background: var(--brown-light); border: 1px solid #e8d5c0; border-radius: 14px; padding: 14px 16px; margin: 1rem 0; text-align: left; }
   .acc-bank { font-size: 11px; color: var(--brown); font-weight: 600; margin-bottom: 6px; letter-spacing: 0.3px; }
   .acc-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   .acc-number { font-size: 18px; font-weight: 700; color: var(--text-dark); letter-spacing: 0.5px; }
-  .copy-btn {
-    flex-shrink: 0;
-    border: 1.5px solid #e0c9ad;
-    border-radius: 8px;
-    background: var(--white);
-    color: var(--brown);
-    font-size: 12px;
-    font-weight: 600;
-    padding: 6px 12px;
-    cursor: pointer;
-    transition: all 0.15s;
-    white-space: nowrap;
-    font-family: inherit;
-  }
+  .copy-btn { flex-shrink: 0; border: 1.5px solid #e0c9ad; border-radius: 8px; background: var(--white); color: var(--brown); font-size: 12px; font-weight: 600; padding: 6px 12px; cursor: pointer; transition: all 0.15s; white-space: nowrap; font-family: inherit; }
   .copy-btn:hover { background: var(--brown-light); }
   .copy-btn.copied { background: #f0ebe4; color: #a06830; border-color: var(--brown); }
   .success-detail { font-size: 13px; color: var(--text-mid); line-height: 1.9; margin-top: 4px; }
@@ -223,9 +167,7 @@
     <div class="hero">
       <div class="pill">직원 전용 특가</div>
       <h1>진심네이처 알티지<br>오메가3 구매 신청</h1>
-      <p class="sub">유통기한 2027년 2월 3일까지</p>
     </div>
-
     <div class="body">
       <div class="info-bar">
         <div class="info-card">
@@ -233,8 +175,8 @@
           <div class="value highlight">2,000원</div>
         </div>
         <div class="info-card">
-          <div class="label">배송 선택 시</div>
-          <div class="value" style="font-size:15px;">+3,000원</div>
+          <div class="label">유통기한</div>
+          <div class="value small">2027년 2월 3일</div>
         </div>
       </div>
 
@@ -246,12 +188,12 @@
       <div class="field">
         <label>수량</label>
         <div class="qty-row">
-          <button class="qty-btn" onclick="changeQty(-1)">−</button>
-          <div>
-            <div class="qty-display" id="qty-display">1개</div>
-            <div class="qty-sub" id="qty-sub">2,000원</div>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="changeQty(-1)">−</button>
+            <input type="number" class="qty-input" id="qty-input" value="1" min="1" oninput="onQtyInput()" />
+            <button class="qty-btn" onclick="changeQty(1)">+</button>
           </div>
-          <button class="qty-btn" onclick="changeQty(1)">+</button>
+          <span class="qty-price" id="qty-price">2,000원</span>
         </div>
       </div>
 
@@ -270,6 +212,10 @@
           </div>
         </div>
         <div class="delivery-box hidden" id="delivery-box">
+          <div class="field">
+            <label>수령자 이름</label>
+            <input type="text" id="receiver-name" placeholder="홍길동" />
+          </div>
           <div class="field">
             <label>수령자 연락처</label>
             <input type="tel" id="phone" placeholder="010-0000-0000" />
@@ -291,9 +237,9 @@
         <span class="total-label">상품 금액</span>
         <span class="total-value" id="item-total">2,000원</span>
       </div>
-      <div class="total-row" id="delivery-row" style="display:none;">
+      <div class="total-row">
         <span class="total-label">배송비</span>
-        <span class="total-value">3,000원</span>
+        <span class="total-value" id="delivery-fee">0원</span>
       </div>
       <div class="total-row final">
         <span class="total-label">합계</span>
@@ -301,11 +247,11 @@
       </div>
 
       <button class="submit-btn" id="submit-btn" onclick="submitForm()">신청하기</button>
-      <p class="notice">신청 후 아래 계좌로 입금해 주시면 확인 후 안내드립니다.<br>입금자명은 반드시 본인 이름으로 해주세요.</p>
+      <p class="notice">신청 완료 후 표시되는 계좌로 입금해 주시면 확인 후 안내드립니다.<br>입금자명은 반드시 본인 이름으로 해주세요.</p>
     </div>
   </div>
 
-  <div class="success" id="success-section" style="padding: 2rem 1.5rem;">
+  <div class="success" id="success-section">
     <div class="check">✅</div>
     <h2>신청이 완료됐어요!</h2>
     <p class="sub">아래 계좌로 입금해 주세요.<br>입금자명은 반드시 <strong>본인 이름</strong>으로 해주세요.</p>
@@ -322,41 +268,48 @@
 
 <script>
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwer23cuRwYB1G7wV1YS2IvZgMnVhfMlOlQY6ts4ooqdxz41G6fTPVJXm3NoBpikwtR/exec';
-  let qty = 1, method = 'pickup';
+  let method = 'pickup';
+
+  function getQty() {
+    const v = parseInt(document.getElementById('qty-input').value);
+    return (isNaN(v) || v < 1) ? 1 : v;
+  }
 
   function selectMethod(m) {
     method = m;
     document.getElementById('btn-pickup').classList.toggle('active', m === 'pickup');
     document.getElementById('btn-delivery').classList.toggle('active', m === 'delivery');
     const box = document.getElementById('delivery-box');
-    const row = document.getElementById('delivery-row');
-    if (m === 'delivery') { box.classList.remove('hidden'); row.style.display = 'flex'; }
-    else { box.classList.add('hidden'); row.style.display = 'none'; }
+    if (m === 'delivery') box.classList.remove('hidden');
+    else box.classList.add('hidden');
     updateTotal();
   }
 
   function changeQty(d) {
-    qty = Math.max(1, qty + d);
-    document.getElementById('qty-display').textContent = qty + '개';
-    document.getElementById('qty-sub').textContent = (qty * 2000).toLocaleString() + '원';
+    const newVal = Math.max(1, getQty() + d);
+    document.getElementById('qty-input').value = newVal;
     updateTotal();
   }
 
+  function onQtyInput() { updateTotal(); }
+
   function updateTotal() {
+    const qty = getQty();
     const item = qty * 2000;
-    const total = item + (method === 'delivery' ? 3000 : 0);
+    const delivery = method === 'delivery' ? 3000 : 0;
+    document.getElementById('qty-price').textContent = item.toLocaleString() + '원';
     document.getElementById('item-total').textContent = item.toLocaleString() + '원';
-    document.getElementById('grand-total').textContent = total.toLocaleString() + '원';
+    document.getElementById('delivery-fee').textContent = delivery.toLocaleString() + '원';
+    document.getElementById('grand-total').textContent = (item + delivery).toLocaleString() + '원';
   }
 
   function copyAccount() {
-    const acc = '3333131815592';
     const btn = document.getElementById('copy-btn');
     if (navigator.clipboard) {
-      navigator.clipboard.writeText(acc).then(() => showCopied(btn));
+      navigator.clipboard.writeText('3333131815592').then(() => showCopied(btn));
     } else {
       const el = document.createElement('textarea');
-      el.value = acc; document.body.appendChild(el); el.select();
+      el.value = '3333131815592'; document.body.appendChild(el); el.select();
       document.execCommand('copy'); document.body.removeChild(el);
       showCopied(btn);
     }
@@ -370,7 +323,9 @@
   async function submitForm() {
     const name = document.getElementById('name').value.trim();
     if (!name) { alert('이름을 입력해 주세요.'); return; }
+    const qty = getQty();
     if (method === 'delivery') {
+      if (!document.getElementById('receiver-name').value.trim()) { alert('수령자 이름을 입력해 주세요.'); return; }
       if (!document.getElementById('phone').value.trim()) { alert('연락처를 입력해 주세요.'); return; }
       if (!document.getElementById('address').value.trim()) { alert('주소를 입력해 주세요.'); return; }
     }
@@ -379,6 +334,7 @@
     const total = qty * 2000 + (method === 'delivery' ? 3000 : 0);
     const payload = {
       name, qty, method,
+      receiverName: document.getElementById('receiver-name').value.trim(),
       phone: document.getElementById('phone').value.trim(),
       address: document.getElementById('address').value.trim(),
       addressDetail: document.getElementById('address-detail').value.trim(),
@@ -390,15 +346,15 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-    } catch (err) { console.error(err); }
+    } catch(err) { console.error(err); }
     document.getElementById('form-section').style.display = 'none';
     const lines = [
       name + '님 · ' + qty + '개 · ' + (method === 'delivery' ? '배송' : '직접 수령'),
       '입금 금액: ' + total.toLocaleString() + '원'
     ];
     if (method === 'delivery') {
+      lines.push('수령자: ' + payload.receiverName + ' / ' + payload.phone);
       lines.push('배송지: ' + payload.address + ' ' + payload.addressDetail);
-      lines.push('연락처: ' + payload.phone);
     }
     document.getElementById('success-detail').innerHTML = lines.join('<br>');
     document.getElementById('success-section').style.display = 'block';
