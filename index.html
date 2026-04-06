@@ -98,7 +98,7 @@
   .delivery-box { background: var(--purple-soft); border-radius: 12px; padding: 1rem; margin-top: 8px; border: 1px solid var(--border); }
   .delivery-box.hidden { display: none; }
   .delivery-box .field:last-child { margin-bottom: 0; }
-  .qty-row { display: flex; align-items: center; gap: 12px; }
+  .qty-row { display: flex; align-items: center; justify-content: space-between; }
   .qty-controls { display: flex; align-items: center; gap: 8px; }
   .qty-btn {
     width: 38px; height: 38px;
@@ -115,7 +115,7 @@
   }
   .qty-btn:hover { background: var(--purple-pale); border-color: var(--purple-light); }
   .qty-input {
-    width: 64px; height: 38px;
+    width: 112px; height: 38px; flex-shrink: 0; flex-grow: 0;
     border: 1.5px solid var(--border);
     border-radius: 10px;
     text-align: center;
@@ -127,7 +127,7 @@
     transition: border 0.15s;
   }
   .qty-input:focus { border-color: var(--purple-mid); }
-  .qty-price { margin-left: auto; font-size: 16px; font-weight: 700; color: var(--purple-mid); white-space: nowrap; }
+  .qty-price { font-size: 16px; font-weight: 700; color: var(--purple-mid); white-space: nowrap; }
   .divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
   .total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .total-label { font-size: 14px; color: var(--text-muted); }
@@ -166,7 +166,8 @@
   <div id="form-section">
     <div class="hero">
       <div class="pill">직원 전용 특가</div>
-      <h1>진심네이처 알티지<br>오메가3 구매 신청</h1>
+      <h1>진심네이처 오메가3<br>구매 신청</h1>
+      <p style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:12px;">신청 기한 · 4월 12일(일)까지</p>
     </div>
     <div class="body">
       <div class="info-bar">
@@ -187,10 +188,10 @@
 
       <div class="field">
         <label>수량</label>
-        <div class="qty-row">
-          <div class="qty-controls">
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <div style="display:flex; align-items:center; gap:8px;">
             <button class="qty-btn" onclick="changeQty(-1)">−</button>
-            <input type="number" class="qty-input" id="qty-input" value="1" min="1" oninput="onQtyInput()" />
+            <input type="number" class="qty-input" id="qty-input" value="1" min="1" oninput="onQtyInput()" style="width:112px !important; min-width:112px; max-width:112px;" />
             <button class="qty-btn" onclick="changeQty(1)">+</button>
           </div>
           <span class="qty-price" id="qty-price">2,000원</span>
@@ -218,7 +219,7 @@
           </div>
           <div class="field">
             <label>수령자 연락처</label>
-            <input type="tel" id="phone" placeholder="010-0000-0000" />
+            <input type="tel" id="phone" placeholder="010-0000-0000" oninput="formatPhone(this)" maxlength="13" />
           </div>
           <div class="field">
             <label>받는 주소</label>
@@ -318,6 +319,19 @@
   function showCopied(btn) {
     btn.textContent = '복사됨 ✓'; btn.classList.add('copied');
     setTimeout(() => { btn.textContent = '계좌 복사'; btn.classList.remove('copied'); }, 2000);
+  }
+
+  function formatPhone(el) {
+    const digits = el.value.replace(/\D/g, '');
+    let formatted = '';
+    if (digits.length <= 3) {
+      formatted = digits;
+    } else if (digits.length <= 7) {
+      formatted = digits.slice(0,3) + '-' + digits.slice(3);
+    } else {
+      formatted = digits.slice(0,3) + '-' + digits.slice(3,7) + '-' + digits.slice(7,11);
+    }
+    el.value = formatted;
   }
 
   async function submitForm() {
