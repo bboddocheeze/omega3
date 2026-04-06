@@ -256,14 +256,15 @@
     <div class="check">✅</div>
     <h2>신청이 완료됐어요!</h2>
     <p class="sub">아래 계좌로 입금해 주세요.<br>입금자명은 반드시 <strong>본인 이름</strong>으로 해주세요.</p>
+    <p style="font-size:13px;color:var(--text-mid);margin-bottom:4px;font-weight:600;">접수 내용을 다시 한 번 확인해 주세요.</p>
     <div class="account-box">
       <div class="acc-bank">카카오뱅크</div>
       <div class="acc-row">
-        <span class="acc-number">3333-13-1815592</span>
+        <div><span class="acc-number">3333-13-1815592</span><span style="font-size:13px;color:var(--text-muted);margin-left:8px;">(이하늘)</span></div>
         <button class="copy-btn" id="copy-btn" onclick="copyAccount()">계좌 복사</button>
       </div>
     </div>
-    <p class="success-detail" id="success-detail"></p>
+    <div id="success-detail" style="background:var(--purple-soft);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-top:8px;text-align:left;font-size:13px;color:var(--text-mid);line-height:2;"></div>
   </div>
 </div>
 
@@ -363,14 +364,25 @@
     } catch(err) { console.error(err); }
     document.getElementById('form-section').style.display = 'none';
     const lines = [
-      name + '님 · ' + qty + '개 · ' + (method === 'delivery' ? '배송' : '직접 수령'),
+      '신청자: ' + name,
+      '수량: ' + qty + '개',
+      '수령 방법: ' + (method === 'delivery' ? '배송' : '직접 수령'),
       '입금 금액: ' + total.toLocaleString() + '원'
     ];
     if (method === 'delivery') {
-      lines.push('수령자: ' + payload.receiverName + ' / ' + payload.phone);
+      lines.push('수령자: ' + payload.receiverName);
+      lines.push('연락처: ' + payload.phone);
       lines.push('배송지: ' + payload.address + ' ' + payload.addressDetail);
     }
-    document.getElementById('success-detail').innerHTML = lines.join('<br>');
+    document.getElementById('success-detail').innerHTML = '<table style="width:100%;border-collapse:collapse;">' + lines.map(l => {
+      const parts = l.split(': ');
+      if (parts.length >= 2) {
+        const key = parts[0];
+        const val = parts.slice(1).join(': ');
+        return '<tr><td style="color:var(--text-muted);padding:2px 12px 2px 0;white-space:nowrap;vertical-align:top;">' + key + '</td><td style="font-weight:600;color:var(--text-dark);">' + val + '</td></tr>';
+      }
+      return '<tr><td colspan="2" style="font-weight:600;color:var(--text-dark);padding:2px 0;">' + l + '</td></tr>';
+    }).join('') + '</table>';
     document.getElementById('success-section').style.display = 'block';
   }
 </script>
