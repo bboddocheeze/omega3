@@ -348,7 +348,7 @@
     <h2>신청이 완료됐어요!</h2>
     <p class="sub">아래 계좌로 입금해 주세요.<br>입금자명은 반드시 <strong>신청자 이름과 동일하게</strong> 해주세요.</p>
     <p style="font-size:13px;color:var(--text-mid);margin-bottom:4px;font-weight:600;">접수 내용을 다시 한 번 확인해 주세요.</p>
-    <p style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">잘못 입력했다면 슬랙에서 <strong style="color:var(--text-mid);">이하늘</strong>에게 DM 해주세요.</p>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">잘못 입력했다면 <strong style="color:var(--text-mid);">010-8914-7140</strong>으로 문자 주세요.</p>
     <div class="account-box">
       <div class="acc-bank">카카오뱅크</div>
       <div class="acc-row">
@@ -357,12 +357,13 @@
       </div>
     </div>
     <div id="success-detail" style="background:var(--purple-soft);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-top:8px;text-align:left;font-size:13px;color:var(--text-mid);line-height:2;"></div>
+    <button onclick="resetForm()" style="width:100%;margin-top:1.25rem;background:var(--white);color:var(--purple-mid);border:1.5px solid var(--purple-mid);border-radius:12px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:0.3px;transition:all 0.15s;" onmouseover="this.style.background='var(--purple-pale)'" onmouseout="this.style.background='var(--white)'">추가 신청하기</button>
   </div>
 </div>
 
 <script>
   // ★ 파트너사 전용 Google Apps Script URL로 교체해 주세요
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwer23cuRwYB1G7wV1YS2IvZgMnVhfMlOlQY6ts4ooqdxz41G6fTPVJXm3NoBpikwtR/exec';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxsnG2U8Gms-s9K9mH6HJmgnB6nNssgLPRsYuuNpQUzRlMNjMqFPFHLHUxEkwsO7mCX/exec';
 
   function getQty() {
     const v = parseInt(document.getElementById('qty-input').value);
@@ -507,6 +508,28 @@
 
   // 페이지 로드 시 초기 금액 세팅
   updateTotal();
+
+  function resetForm() {
+    // 입력값 초기화
+    document.getElementById('name').value = '';
+    document.getElementById('receiver-name').value = '';
+    document.getElementById('phone').value = '';
+    document.getElementById('address').value = '';
+    document.getElementById('address-detail').value = '';
+    document.getElementById('address-detail-field').style.display = 'none';
+    document.getElementById('delivery-message').value = '';
+    document.getElementById('qty-input').value = 1;
+    updateTotal();
+    // 화면 전환
+    document.getElementById('success-section').style.display = 'none';
+    document.getElementById('form-section').style.display = 'block';
+    // 맨 위로 스크롤
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // 버튼 복구
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = false;
+    btn.textContent = '신청하기';
+  }
 </script>
 </body>
 </html>
