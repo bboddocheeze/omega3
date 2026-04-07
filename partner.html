@@ -363,7 +363,7 @@
 
 <script>
   // ★ 파트너사 전용 Google Apps Script URL로 교체해 주세요
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxsnG2U8Gms-s9K9mH6HJmgnB6nNssgLPRsYuuNpQUzRlMNjMqFPFHLHUxEkwsO7mCX/exec';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxIpBD5qRKHp_pjJXJpEDqyx8FDqNXJVK5GnQlPdUT7_j2fax1yO6cJl8BQr16KdSWK/exec';
 
   function getQty() {
     const v = parseInt(document.getElementById('qty-input').value);
@@ -456,6 +456,7 @@
     const total = qty * 2000 + delivery;
     const deliveryMessage = document.getElementById('delivery-message').value.trim();
 
+    const itemTotal = qty * 2000;
     const payload = {
       name, qty,
       method: 'delivery',
@@ -464,6 +465,7 @@
       address: document.getElementById('address').value.trim(),
       addressDetail: document.getElementById('address-detail').value.trim(),
       deliveryMessage: deliveryMessage || '',
+      itemTotal,
       deliveryFee: delivery,
       total
     };
