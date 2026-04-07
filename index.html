@@ -229,6 +229,10 @@
               <button type="button" onclick="searchAddress()" style="flex-shrink:0; background:var(--purple-mid); color:#fff; border:none; border-radius:10px; padding:0 14px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; white-space:nowrap;">주소 검색</button>
             </div>
           </div>
+          <div class="field" id="address-detail-field" style="display:none;">
+            <label>상세 주소</label>
+            <input type="text" id="address-detail" placeholder="동·호수, 층 등" />
+          </div>
         </div>
       </div>
 
@@ -340,6 +344,8 @@
     new daum.Postcode({
       oncomplete: function(data) {
         document.getElementById('address').value = data.roadAddress || data.jibunAddress;
+        document.getElementById('address-detail-field').style.display = 'block';
+        document.getElementById('address-detail').focus();
       }
     }).open();
   }
@@ -361,6 +367,7 @@
       receiverName: document.getElementById('receiver-name').value.trim(),
       phone: document.getElementById('phone').value.trim(),
       address: document.getElementById('address').value.trim(),
+      addressDetail: document.getElementById('address-detail').value.trim(),
       total
     };
     try {
@@ -380,7 +387,7 @@
     if (method === 'delivery') {
       lines.push('수령자: ' + payload.receiverName);
       lines.push('연락처: ' + payload.phone);
-      lines.push('배송지: ' + payload.address);
+      lines.push('배송지: ' + payload.address + (payload.addressDetail ? ' ' + payload.addressDetail : ''));
     }
     document.getElementById('success-detail').innerHTML = '<table style="width:100%;border-collapse:collapse;">' + lines.map(l => {
       const parts = l.split(': ');
