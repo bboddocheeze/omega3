@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>오메가3 구매 신청 (파트너사 전용)</title>
+<style>
+  :root {
+    --purple-deep: #4a3580;
+    --purple-mid: #6b52b5;
+    --purple-light: #9b85d4;
+    --purple-pale: #ede9f8;
+    --purple-soft: #f5f2fc;
+    --brown: #c4895a;
+    --brown-light: #f7efe6;
+    --text-dark: #1e1533;
+    --text-mid: #5a4f72;
+    --text-muted: #9b93b0;
+    --border: #ddd6f0;
+    --white: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--purple-soft);
+    font-family: -apple-system, 'Apple SD Gothic Neo', BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+  .wrap {
+    background: var(--white);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 480px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(74,53,128,0.1);
+  }
+  .hero {
+    background: linear-gradient(160deg, #5c44a0 0%, #3d2b6e 100%);
+    padding: 2rem 1.5rem 2.5rem;
+    text-align: center;
+    position: relative;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 24px;
+    background: var(--white);
+    border-radius: 20px 20px 0 0;
+  }
+  .pill {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    color: #e8e0ff;
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+  .hero h1 { font-size: 21px; font-weight: 700; color: #fff; line-height: 1.4; margin-bottom: 1rem; }
+  .body { padding: 2.25rem 1.5rem 1.75rem; }
+  .info-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1.5rem; }
+  .info-card { background: var(--purple-soft); border: 1px solid var(--border); border-radius: 12px; padding: 12px; text-align: center; }
+  .info-card .label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+  .info-card .value { font-size: 18px; font-weight: 700; color: var(--text-dark); }
+  .info-card .value.highlight { color: var(--purple-mid); }
+  .info-card .value.small { font-size: 18px; font-weight: 700; color: var(--text-dark); }
+  .field { margin-bottom: 1.25rem; }
+  .field label { display: block; font-size: 13px; font-weight: 600; color: var(--text-mid); margin-bottom: 6px; }
+  .field label .optional { font-size: 11px; font-weight: 400; color: var(--text-muted); margin-left: 5px; }
+  .field input, .field textarea {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 15px;
+    color: var(--text-dark);
+    outline: none;
+    background: var(--white);
+    transition: border 0.15s;
+    font-family: inherit;
+  }
+  .field textarea {
+    resize: none;
+    height: 76px;
+    line-height: 1.5;
+  }
+  .field input:focus, .field textarea:focus { border-color: var(--purple-mid); }
+  .qty-row { display: flex; align-items: center; justify-content: space-between; }
+  .qty-controls { display: flex; align-items: center; gap: 8px; }
+  .qty-btn {
+    width: 38px; height: 38px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--white);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--purple-mid);
+    flex-shrink: 0;
+    transition: all 0.15s;
+    font-weight: 500;
+  }
+  .qty-btn:hover { background: var(--purple-pale); border-color: var(--purple-light); }
+  .qty-input {
+    width: 112px; height: 38px; flex-shrink: 0; flex-grow: 0;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-dark);
+    font-family: inherit;
+    outline: none;
+    transition: border 0.15s;
+  }
+  .qty-input:focus { border-color: var(--purple-mid); }
+  .qty-price { font-size: 16px; font-weight: 700; color: var(--purple-mid); white-space: nowrap; }
+
+  /* 배송비 안내 */
+  .delivery-fee-guide {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--text-mid);
+    line-height: 1.8;
+  }
+  .delivery-fee-guide .guide-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    letter-spacing: 0.3px;
+  }
+  .delivery-fee-guide .guide-row {
+    display: flex;
+    justify-content: space-between;
+  }
+  .delivery-fee-guide .guide-row .amount {
+    font-weight: 700;
+    color: var(--purple-mid);
+  }
+
+  /* 배송 입력 박스 */
+  .delivery-box { background: var(--purple-soft); border-radius: 12px; padding: 1rem; margin-top: 8px; border: 1px solid var(--border); }
+  .delivery-box .field:last-child { margin-bottom: 0; }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+  .total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .total-label { font-size: 14px; color: var(--text-muted); }
+  .total-value { font-size: 14px; color: var(--text-dark); }
+  .total-row.final { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+  .total-row.final .total-label { font-size: 16px; font-weight: 600; color: var(--text-dark); }
+  .total-row.final .total-value { font-size: 22px; font-weight: 700; color: var(--purple-mid); }
+
+  /* 신청 전 계좌 확인 박스 */
+  .account-preview {
+    background: var(--brown-light);
+    border: 1px solid #e8d5c0;
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-top: 1.25rem;
+  }
+  .account-preview .acc-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--brown);
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+  }
+  .account-preview .acc-bank { font-size: 11px; color: var(--brown); font-weight: 600; margin-bottom: 6px; letter-spacing: 0.3px; }
+  .account-preview .acc-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .account-preview .acc-number { font-size: 18px; font-weight: 700; color: var(--text-dark); letter-spacing: 0.5px; }
+  .account-preview .acc-hint { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+
+  .copy-btn { flex-shrink: 0; border: 1.5px solid #e0c9ad; border-radius: 8px; background: var(--white); color: var(--brown); font-size: 12px; font-weight: 600; padding: 6px 12px; cursor: pointer; transition: all 0.15s; white-space: nowrap; font-family: inherit; }
+  .copy-btn:hover { background: var(--brown-light); }
+  .copy-btn.copied { background: #f0ebe4; color: #a06830; border-color: var(--brown); }
+
+  .submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #6b52b5 0%, #4a3580 100%);
+    color: #fff; border: none; border-radius: 12px;
+    padding: 15px; font-size: 16px; font-weight: 700;
+    cursor: pointer; margin-top: 1.25rem;
+    transition: opacity 0.15s; font-family: inherit; letter-spacing: 0.3px;
+  }
+  .submit-btn:hover { opacity: 0.9; }
+  .submit-btn:active { transform: scale(0.99); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  .notice { font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 12px; line-height: 1.7; }
+  .success { display: none; text-align: center; padding: 2rem 1.5rem; }
+  .success .check { font-size: 48px; margin-bottom: 1rem; }
+  .success h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-dark); }
+  .success .sub { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem; }
+  .account-box { background: var(--brown-light); border: 1px solid #e8d5c0; border-radius: 14px; padding: 14px 16px; margin: 1rem 0; text-align: left; }
+  .acc-bank { font-size: 11px; color: var(--brown); font-weight: 600; margin-bottom: 6px; letter-spacing: 0.3px; }
+  .acc-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .acc-number { font-size: 18px; font-weight: 700; color: var(--text-dark); letter-spacing: 0.5px; }
+  .success-detail { font-size: 13px; color: var(--text-mid); line-height: 1.9; margin-top: 4px; }
+</style>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div id="form-section">
+    <div class="hero">
+      <div class="pill">파트너사 전용</div>
+      <h1>진심네이처 오메가3<br>구매 신청</h1>
+      <p style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:12px;">신청 기한 · 4월 12일(일)까지</p>
+    </div>
+    <div class="body">
+      <!-- 정가 / 할인가 -->
+      <div style="display:grid; grid-template-columns: 1fr auto 1fr; gap:8px; margin-bottom:8px; align-items:stretch;">
+        <div class="info-card">
+          <div class="label">정가</div>
+          <div style="font-size:17px; font-weight:700; color:var(--text-muted); text-decoration:line-through;">38,000원</div>
+        </div>
+        <div style="display:flex; align-items:center; justify-content:center; color:var(--purple-light); font-size:18px; padding:0 2px;">→</div>
+        <div class="info-card">
+          <div class="label">할인가</div>
+          <div class="value highlight">2,000원</div>
+        </div>
+      </div>
+
+      <!-- 안내사항 박스 -->
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:1.5rem;text-align:left;">
+        <div style="font-size:11px;font-weight:600;color:var(--text-muted);letter-spacing:0.3px;margin-bottom:8px;">안내사항</div>
+        <ul style="list-style:none;padding:0;margin:0;font-size:12px;color:var(--text-mid);line-height:1.6;display:flex;flex-direction:column;gap:6px;">
+          <li style="display:flex;gap:6px;"><span style="color:var(--purple-light);flex-shrink:0;">•</span><span>유통기한 <strong style="color:var(--text-dark);">2027년 2월 3일</strong></span></li>
+          <li style="display:flex;gap:6px;"><span style="color:var(--purple-light);flex-shrink:0;">•</span><span>1박스당 1개월 분량 (60캡슐)</span></li>
+          <li style="display:flex;gap:6px;"><span style="color:var(--purple-light);flex-shrink:0;">•</span><span><a href="https://smartstore.naver.com/jinsimn/products/11601712569" target="_blank" style="color:var(--purple-mid);font-weight:600;text-decoration:none;">상품 상세 보기</a></span></li>
+          <li style="display:flex;gap:6px;"><span style="color:var(--purple-light);flex-shrink:0;">•</span><span>정확한 정보 입력 부탁드립니다.</span></li>
+          <li style="display:flex;gap:6px;"><span style="color:var(--purple-light);flex-shrink:0;">•</span><span>기타 문의사항은 <strong style="color:var(--text-dark);">010-8914-7140</strong>으로 문자 주세요.</span></li>
+        </ul>
+      </div>
+
+      <div class="field">
+        <label>이름</label>
+        <input type="text" id="name" placeholder="홍길동" />
+      </div>
+
+      <div class="field">
+        <label>수량</label>
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <button class="qty-btn" onclick="changeQty(-1)">−</button>
+            <input type="number" class="qty-input" id="qty-input" value="1" min="1" oninput="onQtyInput()" style="width:112px !important; min-width:112px; max-width:112px;" />
+            <button class="qty-btn" onclick="changeQty(1)">+</button>
+          </div>
+          <span class="qty-price" id="qty-price">2,000원</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>수령 방법</label>
+        <!-- 배송만 가능 안내 -->
+        <div style="background:var(--purple-soft);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;">
+          <span style="font-size:22px;">📦</span>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:var(--purple-deep);">배송</div>
+            <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">파트너사는 배송으로만 접수 가능합니다</div>
+          </div>
+        </div>
+
+        <!-- 배송비 안내 -->
+        <div class="delivery-fee-guide" style="margin-top:8px;">
+          <div class="guide-title">배송비 안내</div>
+          <div class="guide-row"><span>8개 이하</span><span class="amount">3,000원</span></div>
+          <div class="guide-row"><span>9 ~ 30개</span><span class="amount">3,400원</span></div>
+          <div class="guide-row"><span>30개 초과</span><span class="amount">4,100원</span></div>
+        </div>
+
+        <!-- 배송 입력 필드 -->
+        <div class="delivery-box" id="delivery-box" style="margin-top:8px;">
+          <div class="field">
+            <label>수령자 이름</label>
+            <input type="text" id="receiver-name" placeholder="홍길동" />
+          </div>
+          <div class="field">
+            <label>수령자 연락처</label>
+            <input type="tel" id="phone" placeholder="010-0000-0000" oninput="formatPhone(this)" maxlength="13" />
+          </div>
+          <div class="field">
+            <label>받는 주소</label>
+            <div style="display:flex; gap:8px;">
+              <input type="text" id="address" placeholder="주소 검색 버튼을 눌러주세요" readonly style="flex:1; background:#f9f9f9; cursor:pointer;" onclick="searchAddress()" />
+              <button type="button" onclick="searchAddress()" style="flex-shrink:0; background:var(--purple-mid); color:#fff; border:none; border-radius:10px; padding:0 14px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; white-space:nowrap;">주소 검색</button>
+            </div>
+          </div>
+          <div class="field" id="address-detail-field" style="display:none;">
+            <label>상세 주소</label>
+            <input type="text" id="address-detail" placeholder="동·호수, 층 등" />
+          </div>
+          <div class="field" style="margin-bottom:0;">
+            <label>배송 메시지 <span class="optional">(선택사항)</span></label>
+            <textarea id="delivery-message" placeholder="배송 시 요청사항을 입력해 주세요"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="total-row">
+        <span class="total-label">상품 금액</span>
+        <span class="total-value" id="item-total">2,000원</span>
+      </div>
+      <div class="total-row">
+        <span class="total-label">배송비</span>
+        <span class="total-value" id="delivery-fee">3,000원</span>
+      </div>
+      <div class="total-row final">
+        <span class="total-label">합계</span>
+        <span class="total-value" id="grand-total">5,000원</span>
+      </div>
+
+      <!-- 신청 전 계좌 확인 -->
+      <div class="account-preview">
+        <div class="acc-label">💳 입금 계좌 확인</div>
+        <div class="acc-bank">카카오뱅크</div>
+        <div class="acc-row">
+          <div>
+            <span class="acc-number">3333-13-1815592</span>
+            <span style="font-size:13px;color:var(--text-muted);margin-left:8px;">(이하늘)</span>
+          </div>
+          <button class="copy-btn" id="copy-btn-preview" onclick="copyAccountPreview()">계좌 복사</button>
+        </div>
+        <div class="acc-hint">입금자명은 반드시 본인 이름으로 해주세요.</div>
+      </div>
+
+      <button class="submit-btn" id="submit-btn" onclick="submitForm()">신청하기</button>
+      <p class="notice">신청 완료 후 위 계좌로 입금해 주시면 확인 후 안내드립니다.<br>입금 계좌는 신청 접수 후에도 이 페이지에서 다시 확인하실 수 있습니다.</p>
+      <p style="font-size:12px;color:var(--text-muted);text-align:center;margin-top:10px;line-height:1.7;">제품 및 신청 관련 문의는 문자로 연락해 주세요.<br><strong style="color:var(--text-mid);">010-8914-7140</strong></p>
+    </div>
+  </div>
+
+  <div class="success" id="success-section">
+    <div class="check">✅</div>
+    <h2>신청이 완료됐어요!</h2>
+    <p class="sub">아래 계좌로 입금해 주세요.<br>입금자명은 반드시 <strong>신청자 이름과 동일하게</strong> 해주세요.</p>
+    <p style="font-size:13px;color:var(--text-mid);margin-bottom:4px;font-weight:600;">접수 내용을 다시 한 번 확인해 주세요.</p>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">잘못 입력했다면 슬랙에서 <strong style="color:var(--text-mid);">이하늘</strong>에게 DM 해주세요.</p>
+    <div class="account-box">
+      <div class="acc-bank">카카오뱅크</div>
+      <div class="acc-row">
+        <div><span class="acc-number">3333-13-1815592</span><span style="font-size:13px;color:var(--text-muted);margin-left:8px;">(이하늘)</span></div>
+        <button class="copy-btn" id="copy-btn" onclick="copyAccount()">계좌 복사</button>
+      </div>
+    </div>
+    <div id="success-detail" style="background:var(--purple-soft);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-top:8px;text-align:left;font-size:13px;color:var(--text-mid);line-height:2;"></div>
+  </div>
+</div>
+
+<script>
+  // ★ 파트너사 전용 Google Apps Script URL로 교체해 주세요
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwer23cuRwYB1G7wV1YS2IvZgMnVhfMlOlQY6ts4ooqdxz41G6fTPVJXm3NoBpikwtR/exec';
+
+  function getQty() {
+    const v = parseInt(document.getElementById('qty-input').value);
+    return (isNaN(v) || v < 1) ? 1 : v;
+  }
+
+  function getDeliveryFee(qty) {
+    if (qty <= 8) return 3000;
+    if (qty <= 30) return 3400;
+    return 4100;
+  }
+
+  function changeQty(d) {
+    const newVal = Math.max(1, getQty() + d);
+    document.getElementById('qty-input').value = newVal;
+    updateTotal();
+  }
+
+  function onQtyInput() { updateTotal(); }
+
+  function updateTotal() {
+    const qty = getQty();
+    const item = qty * 2000;
+    const delivery = getDeliveryFee(qty);
+    document.getElementById('qty-price').textContent = item.toLocaleString() + '원';
+    document.getElementById('item-total').textContent = item.toLocaleString() + '원';
+    document.getElementById('delivery-fee').textContent = delivery.toLocaleString() + '원';
+    document.getElementById('grand-total').textContent = (item + delivery).toLocaleString() + '원';
+  }
+
+  function copyAccount() {
+    copyText('3333131815592', document.getElementById('copy-btn'));
+  }
+
+  function copyAccountPreview() {
+    copyText('3333131815592', document.getElementById('copy-btn-preview'));
+  }
+
+  function copyText(text, btn) {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => showCopied(btn));
+    } else {
+      const el = document.createElement('textarea');
+      el.value = text; document.body.appendChild(el); el.select();
+      document.execCommand('copy'); document.body.removeChild(el);
+      showCopied(btn);
+    }
+  }
+
+  function showCopied(btn) {
+    btn.textContent = '복사됨 ✓'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '계좌 복사'; btn.classList.remove('copied'); }, 2000);
+  }
+
+  function formatPhone(el) {
+    const digits = el.value.replace(/\D/g, '');
+    let formatted = '';
+    if (digits.length <= 3) {
+      formatted = digits;
+    } else if (digits.length <= 7) {
+      formatted = digits.slice(0,3) + '-' + digits.slice(3);
+    } else {
+      formatted = digits.slice(0,3) + '-' + digits.slice(3,7) + '-' + digits.slice(7,11);
+    }
+    el.value = formatted;
+  }
+
+  function searchAddress() {
+    new daum.Postcode({
+      oncomplete: function(data) {
+        document.getElementById('address').value = data.roadAddress || data.jibunAddress;
+        document.getElementById('address-detail-field').style.display = 'block';
+        document.getElementById('address-detail').focus();
+      }
+    }).open();
+  }
+
+  async function submitForm() {
+    const name = document.getElementById('name').value.trim();
+    if (!name) { alert('이름을 입력해 주세요.'); return; }
+    const qty = getQty();
+    if (!document.getElementById('receiver-name').value.trim()) { alert('수령자 이름을 입력해 주세요.'); return; }
+    if (!document.getElementById('phone').value.trim()) { alert('연락처를 입력해 주세요.'); return; }
+    if (!document.getElementById('address').value.trim()) { alert('주소를 입력해 주세요.'); return; }
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true; btn.textContent = '신청 중...';
+
+    const delivery = getDeliveryFee(qty);
+    const total = qty * 2000 + delivery;
+    const deliveryMessage = document.getElementById('delivery-message').value.trim();
+
+    const payload = {
+      name, qty,
+      method: 'delivery',
+      receiverName: document.getElementById('receiver-name').value.trim(),
+      phone: document.getElementById('phone').value.trim(),
+      address: document.getElementById('address').value.trim(),
+      addressDetail: document.getElementById('address-detail').value.trim(),
+      deliveryMessage: deliveryMessage || '',
+      deliveryFee: delivery,
+      total
+    };
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch(err) { console.error(err); }
+
+    document.getElementById('form-section').style.display = 'none';
+
+    const lines = [
+      '신청자: ' + name,
+      '수량: ' + qty + '개',
+      '수령 방법: 배송',
+      '수령자: ' + payload.receiverName,
+      '연락처: ' + payload.phone,
+      '배송지: ' + payload.address + (payload.addressDetail ? ' ' + payload.addressDetail : ''),
+    ];
+    if (deliveryMessage) lines.push('배송 메시지: ' + deliveryMessage);
+    lines.push('배송비: ' + delivery.toLocaleString() + '원');
+    lines.push('입금 금액: ' + total.toLocaleString() + '원');
+
+    document.getElementById('success-detail').innerHTML =
+      '<table style="width:100%;border-collapse:collapse;">' +
+      lines.map(l => {
+        const idx = l.indexOf(': ');
+        if (idx !== -1) {
+          const key = l.slice(0, idx);
+          const val = l.slice(idx + 2);
+          return '<tr><td style="color:var(--text-muted);padding:2px 12px 2px 0;white-space:nowrap;vertical-align:top;">' + key + '</td><td style="font-weight:600;color:var(--text-dark);">' + val + '</td></tr>';
+        }
+        return '<tr><td colspan="2" style="font-weight:600;color:var(--text-dark);padding:2px 0;">' + l + '</td></tr>';
+      }).join('') +
+      '</table>';
+
+    document.getElementById('success-section').style.display = 'block';
+  }
+
+  // 페이지 로드 시 초기 금액 세팅
+  updateTotal();
+</script>
+</body>
+</html>
