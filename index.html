@@ -210,7 +210,7 @@
           <div class="toggle-btn" id="btn-delivery" onclick="selectMethod('delivery')">
             <div class="t-icon">📦</div>
             <div class="t-label">배송</div>
-            <div class="t-sub">배송비 3,000원</div>
+            <div class="t-sub">배송비 3,000원~</div>
           </div>
         </div>
         <div class="delivery-box hidden" id="delivery-box">
@@ -303,7 +303,7 @@
   function updateTotal() {
     const qty = getQty();
     const item = qty * 2000;
-    const delivery = method === 'delivery' ? 3000 : 0;
+    const delivery = method === 'delivery' ? (qty > 30 ? 4000 : 3000) : 0;
     document.getElementById('qty-price').textContent = item.toLocaleString() + '원';
     document.getElementById('item-total').textContent = item.toLocaleString() + '원';
     document.getElementById('delivery-fee').textContent = delivery.toLocaleString() + '원';
